@@ -4,78 +4,71 @@
 <meta charset="UTF-8">
 <title>Valentine</title>
 <style>
-    body {
-        margin: 0;
-        overflow: hidden;
-        font-family: Arial, sans-serif;
-        background: #ffdde1;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-    }
+body {
+    margin: 0;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    background: #ffdde1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
 
-    .container {
-        text-align: center;
-        background: white;
-        padding: 30px;
-        border-radius: 20px;
-        box-shadow: 0 0 20px rgba(0,0,0,0.2);
-        position: relative;
-        z-index: 2;
-    }
+.container {
+    text-align: center;
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    position: relative;
+    z-index: 2;
+}
 
-    h1 {
-        color: #ff4d6d;
-    }
+h1 {
+    color: #ff4d6d;
+}
 
-    button {
-        padding: 12px 25px;
-        margin: 10px;
-        border: none;
-        border-radius: 10px;
-        font-size: 16px;
-        cursor: pointer;
-        transition: 0.2s;
-    }
+button {
+    padding: 12px 25px;
+    margin: 10px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
 
-    #yesBtn {
-        background-color: #ff4d6d;
-        color: white;
-    }
+#yesBtn {
+    background-color: #ff4d6d;
+    color: white;
+}
 
-    #noBtn {
-        background-color: #ccc;
-        position: absolute;
-    }
+#noBtn {
+    background-color: #ccc;
+    position: absolute;
+}
 
-    .hearts {
-        position: fixed;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        overflow: hidden;
-        z-index: 1;
-    }
+.hearts {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    z-index: 1;
+}
 
-    .heart {
-        position: absolute;
-        color: #ff4d6d;
-        font-size: 20px;
-        animation: float 6s linear infinite;
-    }
+.heart {
+    position: absolute;
+    color: #ff4d6d;
+    font-size: 20px;
+    animation: float 6s linear infinite;
+}
 
-    @keyframes float {
-        0% {
-            transform: translateY(100vh);
-            opacity: 1;
-        }
-        100% {
-            transform: translateY(-10vh);
-            opacity: 0;
-        }
-    }
+@keyframes float {
+    0% { transform: translateY(100vh); opacity: 1; }
+    100% { transform: translateY(-10vh); opacity: 0; }
+}
 </style>
 </head>
 <body>
@@ -93,13 +86,19 @@ const noBtn = document.getElementById("noBtn");
 const yesBtn = document.getElementById("yesBtn");
 const box = document.getElementById("mainBox");
 
-// Move NO button
-noBtn.addEventListener("mouseover", () => {
+// Function to move NO button
+function moveNoButton() {
     const x = Math.random() * (window.innerWidth - 100);
     const y = Math.random() * (window.innerHeight - 50);
     noBtn.style.left = x + "px";
     noBtn.style.top = y + "px";
-});
+}
+
+// Move when mouse gets close / hover
+noBtn.addEventListener("mouseenter", moveNoButton);
+
+// Also move if user somehow clicks
+noBtn.addEventListener("click", moveNoButton);
 
 // YES click
 yesBtn.addEventListener("click", () => {
@@ -116,9 +115,7 @@ function createHeart() {
     heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
     document.getElementById("hearts").appendChild(heart);
 
-    setTimeout(() => {
-        heart.remove();
-    }, 6000);
+    setTimeout(() => heart.remove(), 6000);
 }
 
 setInterval(createHeart, 300);
